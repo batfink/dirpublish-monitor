@@ -1,0 +1,9 @@
+{
+    "dependencies": [
+        "require normalize.css",
+        "require marko-widgets",
+        "src/components/monitor",
+        "./style.css",
+        "src/thirdparty/primus.js"
+    ]
+}

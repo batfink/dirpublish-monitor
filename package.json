@@ -1,0 +1,36 @@
+{
+  "name": "dirpublish-monitor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js | bistre"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/batfink/dirpublish-monitor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/batfink/dirpublish-monitor/issues"
+  },
+  "homepage": "https://github.com/batfink/dirpublish-monitor#readme",
+  "dependencies": {
+    "app-module-path": "2.1.0",
+    "bistre": "1.0.1",
+    "bole": "3.0.2",
+    "express": "4.14.0",
+    "lasso": "2.8.2",
+    "lasso-marko": "2.1.0",
+    "marko": "3.12.1",
+    "marko-widgets": "6.4.1",
+    "normalize.css": "5.0.0",
+    "primus": "6.0.5",
+    "primus-multiplex": "3.2.1",
+    "redis": "2.6.3",
+    "serve-static": "1.11.1",
+    "ws": "1.1.1"
+  }
+}
