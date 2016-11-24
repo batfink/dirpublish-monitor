@@ -27,3 +27,5 @@ component.handleClick = function() {
 module.exports = defineComponent(component);
 ```
 
+I server.js er alt på server-siden samlet i en enkelt fil for å gjøre ting oversiktlig – dette er ikke beregnet på produksjon. 
+
