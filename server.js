@@ -13,7 +13,9 @@ const express = require('express'),
       log = bole('server'),
       port = 7777,
       Primus = require('primus'),
-      http = require('http');
+      http = require('http'),
+      EventEmitter = require('eventemitter3'),
+      EE = new EventEmitter();
 
 app.use('/static', serveStatic(__dirname + '/static'));
 
@@ -40,30 +42,38 @@ require('lasso').configure({
     ]
 });
 
-const client = require('redis').createClient(),
+const sub = require('redis').createClient(),
       server = require('http').createServer(app),
-      socket = new Primus(server, { transformer: 'websockets' });
+      primus = new Primus(server, { transformer: 'websockets' });
 
-socket.save('./src/thirdparty/primus.js');
+primus.save('./src/thirdparty/primus.js');
 
 bole.output({
     level: 'debug',
     stream: process.stdout
 });
 
-client.on('connect', () => {
-    log.debug('connected to redis');
+primus.on('connection', spark => {
+    //log.debug('spark', spark);
+    spark.write(JSON.stringify({'msg':'hello from server'}));
+    EE.on('update', (data) => {
+        log.debug('update from redis received', JSON.parse(data));
+        spark.write(data);
+    });
+    spark.on('data', data => {
+        log.debug('update from browser:', data);
+    });
 });
 
-client.on('message', (channel, message) => {
-    log.debug(`Message on channel ${channel}`, JSON.parse(message));
+sub.on('message', (channel, message) => {
+    EE.emit('update', message, sub);
 });
 
-client.on('subscribe', (channel, count) => {
+sub.on('subscribe', (channel, count) => {
     log.debug(`Subscribed to redis pubsub channel ${channel} ${count}`)
 });
 
-client.subscribe('direkte~dirpublish');
+sub.subscribe('direkte~dirpublish');
 
 app.get('/',
     (req, res, next) => {
