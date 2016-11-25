@@ -1,5 +1,6 @@
 <div w-bind>
-    <p>
-        Test
-    </p>
+    <h1>Test</h1>
+    <ul id="notis-list">
+        <notis for(note in data.notes) data=note w-id=note.data.id/>
+    </ul>
 </div>

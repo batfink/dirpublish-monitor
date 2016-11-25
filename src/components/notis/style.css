@@ -1,5 +1,5 @@
 .notis {
-    outline: 1px solid orange;
     padding: 20px;
-    background: white;
+    color: white;
+    border-top: 1px solid white;
 }

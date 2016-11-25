@@ -1,3 +1,14 @@
 div {
-    background: orange;
+    background: maroon;
+    color: white;
+}
+
+h1 {
+    padding: 10px 20px;
+    font-weight: normal;
+}
+
+#notis-list {
+    padding: 0;
+    list-style-type: none;
 }

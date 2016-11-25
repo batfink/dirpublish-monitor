@@ -24,12 +24,14 @@ component.init = function() {
 
     primus.on('data', data => {
         const dataObj = JSON.parse(data);
+
         if (dataObj.hosts) {
-            notis.render({
-                publication: dataObj.hosts[0],
-                event: dataObj.event,
-                title: dataObj.data.document.title
-            }).prependTo(container.firstChild);
+            if (this.getWidget(dataObj.data.id)) {
+                this.updateNote(dataObj);
+                //console.log('Note exists'); 
+            } else {
+                this.addNote(dataObj);            
+            }
         }
         console.log('data received:', dataObj);
     });
@@ -42,5 +44,26 @@ component.init = function() {
         console.log('foo');
     });
 };
+
+component.getInitialState = function(input) {
+    return {
+        notes: []
+    }
+};
+
+component.getTemplateData = function(state, input) {
+    return {
+        notes: state.notes
+    }
+}
+
+component.updateNote = function(note) {
+    this.getWidget(note.data.id).updateNote(note);
+}
+
+component.addNote = function(note) {
+    this.state.notes.unshift(note);
+    this.setStateDirty('notes');
+}
 
 module.exports = defineComponent(component);
