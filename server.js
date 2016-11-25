@@ -57,7 +57,8 @@ primus.on('connection', spark => {
     //log.debug('spark', spark);
     spark.write(JSON.stringify({'msg':'hello from server'}));
     EE.on('update', (data) => {
-        log.debug('update from redis received', JSON.parse(data));
+        //log.debug('update from redis received', JSON.parse(data));
+        log.debug('data from redis received:', JSON.parse(data).type);
         spark.write(data);
     });
     spark.on('data', data => {
@@ -70,7 +71,7 @@ sub.on('message', (channel, message) => {
 });
 
 sub.on('subscribe', (channel, count) => {
-    log.debug(`Subscribed to redis pubsub channel ${channel} ${count}`)
+    log.debug(`Subscribed to redis channel ${channel} ${count}`)
 });
 
 sub.subscribe('direkte~dirpublish');
